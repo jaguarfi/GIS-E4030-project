@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+{% load static %}
+
+
+<html lang="en" >
+    <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <script src="http://openlayers.org/api/OpenLayers.js"></script> 
+
+    </head>
+    <body onload = "init()">
+	<h1> T E S T </h1>
+    <div id="map">
+	<iframe   style="background: white;" src="http://openlayers.org/api/OpenLayers.js" allowfullscreen></iframe>
+	</div>
+	{% block js %} {% endblock %}
+    </body>
+	
+</html>

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+	'mapapp',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-         os.path.join(BASE_DIR, 'mapservice/templates/'),
+         os.path.join(BASE_DIR, 'mapapp/templates/'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -76,15 +77,7 @@ WSGI_APPLICATION = 'mapservice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-'default': {
-    'ENGINE': 'django.contrib.gis.db.backends.postgis',
-    'NAME': 'GIS_DB1',
-    'USER': 'postgres',
-    'PASSWORD': 'ApinaVapina',
-    'HOST': 'localhost',
-}
-}
+#--done later, conditionally
 
 
 # Password validation
@@ -126,4 +119,20 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #Fix for each system separately?
-GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
+import os
+
+#check username to determine system and fix parameters conditionally:
+if os.environ['USERNAME'] == 'juhan':
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'GIS_DB1',
+        'USER': 'postgres',
+        'PASSWORD': 'ApinaVapina',
+        'HOST': 'localhost',
+    }
+    }
+    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
+else:
+    print('username definition missing, copy the segment above this code with elif but use your username instead of juhan. Fix parameters as needed')
+    raise 
