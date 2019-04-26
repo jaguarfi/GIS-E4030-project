@@ -9,10 +9,19 @@
 
     </head>
     <body onload = "init()">
-	<h1> T E S T </h1>
+	<h1> front page!  </h1>
+	<p> Let's create the map here </p>
+	<br>
+	<br>
+	<a href="{% url 'test' %}">
+    TEST page! Play around with this page and try out things. Source code for it in mapservice folder
+    </a>
     <div id="map">
+	<br>
+	<p>In the frame below is source code fron OpenLayers that we'll want to render as background map:</p>
 	<iframe   style="background: white;" src="http://openlayers.org/api/OpenLayers.js" allowfullscreen></iframe>
 	</div>
+	<p> Access the admin page by going to /admin URL and using credentials: admin & ApinaVapina </p>
 	{% block js %} {% endblock %}
     </body>
 	

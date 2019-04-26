@@ -58,6 +58,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
          os.path.join(BASE_DIR, 'mapapp/templates/'),
+         os.path.join(BASE_DIR, 'mapservice/templates/'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
