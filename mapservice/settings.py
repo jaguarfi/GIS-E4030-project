@@ -135,4 +135,26 @@ if os.environ['USERNAME'] == 'juhan':
     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
 else:
     print('username definition missing, copy the segment above this code with elif but use your username instead of juhan. Fix parameters as needed')
-    raise 
+    raise
+
+
+
+#Added a textual logger for easier tracing
+LOGGING = {
+'version': 1,
+'disable_existing_loggers': False,
+'handlers': {
+    'file': {
+        'level': 'DEBUG',
+        'class': 'logging.FileHandler',
+        'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
+    },
+},
+'loggers': {
+    'django': {
+        'handlers': ['file',],
+        'level': 'DEBUG',
+        'propagate': True,
+    },
+},
+}
