@@ -143,8 +143,19 @@ elif os.environ['USERNAME'] == 'Jhosea':
         'PASSWORD': 'ApinaVapina',
         'HOST': 'localhost',
     }
-    } 
+    }
     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
+elif os.environ['USERNAME'] == 'Tekla':
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'GIS_DB',
+        'USER': 'postgres',
+        'PASSWORD': 'ApinaVapina',
+        'HOST': 'localhost',
+    }
+    }
+    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W64\\bin\\gdal204.dll'
 else:
     print('username definition missing, copy the segment above this code with elif but use your username instead of juhan. Fix parameters as needed')
     raise
