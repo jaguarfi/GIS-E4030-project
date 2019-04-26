@@ -149,7 +149,7 @@ elif os.environ['USERNAME'] == 'Tekla':
     DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'GIS_DB',
+        'NAME': 'postgis_25_sample',
         'USER': 'postgres',
         'PASSWORD': 'ApinaVapina',
         'HOST': 'localhost',
