@@ -29,3 +29,5 @@ git checkout <filepath> - permanently disregards changes in this file compared t
 you can install most python libraries by git console with the command:
 pip install <library name>
 
+really hard :(
+

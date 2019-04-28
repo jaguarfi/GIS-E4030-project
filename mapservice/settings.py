@@ -58,6 +58,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
          os.path.join(BASE_DIR, 'mapapp/templates/'),
+         os.path.join(BASE_DIR, 'mapservice/templates/'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -142,11 +143,27 @@ elif os.environ['USERNAME'] == 'Jhosea':
         'USER': 'postgres',
         'PASSWORD': 'admin#2019#aalto',
     }
+<<<<<<< HEAD
     } 
     # GDAL_LIBRARY_PATH = 'C:\\Program Files (x86)\\GDAL\\gdal202.dll'
     # GEOS_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\geos.dll'
     # GDAL_DATA = 'C:\\Program Files (x86)\\GDAL\\gdal-data'
     # PROJ_LIB = 'C:\\Program Files (x86)\\GDAL\\projlib'
+=======
+    }
+    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
+elif os.environ['USERNAME'] == 'Tekla':
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'postgis_25_sample',
+        'USER': 'postgres',
+        'PASSWORD': 'ApinaVapina',
+        'HOST': 'localhost',
+    }
+    }
+    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W64\\bin\\gdal204.dll'
+>>>>>>> 6866c4012b0054741bca1c8dbdbb1fad6bb8528c
 else:
     print('username definition missing, copy the segment above this code with elif but use your username instead of juhan. Fix parameters as needed')
     raise
