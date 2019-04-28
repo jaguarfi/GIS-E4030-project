@@ -1,0 +1,5 @@
+# 
+mapservice/__pycache__/
+mapapp/__pycache__/
+mapapp/migrations/
+logs/debug.log
