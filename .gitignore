@@ -1,5 +1,4 @@
-# 
-mapservice/__pycache__/
-mapapp/__pycache__/
+*.pyc
+*.pyo
 mapapp/migrations/
 logs/debug.log
