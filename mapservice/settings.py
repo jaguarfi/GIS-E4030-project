@@ -135,17 +135,27 @@ if os.environ['USERNAME'] == 'juhan':
     }
     }
     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
+        
 elif os.environ['USERNAME'] == 'Jhosea':
     DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'GIS_DB',
         'USER': 'postgres',
+        'PASSWORD': 'admin#2019#aalto',
+    }
+    }
+elif os.environ['USERNAME'] == 'Tekla':
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'postgis_25_sample',
+        'USER': 'postgres',
         'PASSWORD': 'ApinaVapina',
         'HOST': 'localhost',
     }
-    } 
-    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
+    }
+    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W64\\bin\\gdal204.dll'
 else:
     print('username definition missing, copy the segment above this code with elif but use your username instead of juhan. Fix parameters as needed')
     raise
@@ -172,6 +182,7 @@ LOGGING = {
 },
 }
 
+
 #Settings for Django-Leaflet  60.186829   24.821367
 LEAFLET_CONFIG = {
     #'SPATIAL_EXTENT': (), not sure how to fill params - needs 4. long/lats?
@@ -181,3 +192,4 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 18,
     'SCALE': 'metric',
 }
+

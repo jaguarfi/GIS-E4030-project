@@ -1,0 +1,7 @@
+# ignore .pyc and .pyo files
+*.pyc
+*.pyo
+
+# ignore migrations
+mapapp/migrations/
+logs/debug.log
