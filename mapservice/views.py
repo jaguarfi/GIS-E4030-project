@@ -2,5 +2,6 @@ from django.shortcuts import render
 
 
 def testpage(request):
-    return render(request, 'testpage.html')	
+    context = {'s' : 100, 'string' : 'moi'}
+    return render(request, 'testpage.html', context)	
 	
