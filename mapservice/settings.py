@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
 	'mapapp',
+	'leaflet',
 ]
 
 MIDDLEWARE = [
@@ -143,9 +144,13 @@ elif os.environ['USERNAME'] == 'Jhosea':
         'USER': 'postgres',
         'PASSWORD': 'admin#2019#aalto',
     }
+<<<<<<< HEAD
     } 
     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
 
+=======
+    }
+>>>>>>> 78c2601e54c7b32bfba6335b53cea0b9322a5e8c
 elif os.environ['USERNAME'] == 'Tekla':
     DATABASES = {
     'default': {
@@ -157,6 +162,7 @@ elif os.environ['USERNAME'] == 'Tekla':
     }
     }
     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W64\\bin\\gdal204.dll'
+<<<<<<< HEAD
 
 elif os.environ['USERNAME'] == 'Bijay Karki':
     DATABASES = {
@@ -170,6 +176,8 @@ elif os.environ['USERNAME'] == 'Bijay Karki':
     }
     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
 
+=======
+>>>>>>> 78c2601e54c7b32bfba6335b53cea0b9322a5e8c
 else:
     print('username definition missing, copy the segment above this code with elif but use your username instead of juhan. Fix parameters as needed')
     
@@ -195,3 +203,15 @@ LOGGING = {
     },
 },
 }
+
+
+#Settings for Django-Leaflet  60.186829   24.821367
+LEAFLET_CONFIG = {
+    #'SPATIAL_EXTENT': (), not sure how to fill params - needs 4. long/lats?
+    'DEFAULT_CENTER': (60.186829, 24.821367), #coords for rougly tik-talo, one of the two buildings
+    'DEFAULT_ZOOM': 16,
+    'MIN_ZOOM': 10,
+    'MAX_ZOOM': 18,
+    'SCALE': 'metric',
+}
+

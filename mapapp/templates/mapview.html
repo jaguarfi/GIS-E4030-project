@@ -1,28 +1,36 @@
 <!DOCTYPE HTML>
 {% load static %}
-
+{% load leaflet_tags %}
 
 <html lang="en" >
     <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <script src="http://openlayers.org/api/OpenLayers.js"></script> 
-
+    <script src="http://openlayers.org/api/OpenLayers.js"></script> 
+	
+	{% leaflet_js %}
+    {% leaflet_css %}
+	
+	<style>
+		{# comment: no clue why this is not working atm? i wanted full page size map, but w/e just proof of concepting for now so... #}
+		.leaflet-container { height: 100%; }
+    </style>
+	
     </head>
-    <body onload = "init()">
-	<h1> front page!  </h1>
-	<p> Let's create the map here </p>
-	<br>
-	<br>
+	
+	
+    <body>
+	
+	<h1 id="title"> Map service  </h1>
 	<a href="{% url 'test' %}">
-    TEST page! Play around with this page and try out things. Source code for it in mapservice folder
+    TEST page! Play around with it
     </a>
-    <div id="map">
-	<br>
-	<p>In the frame below is source code fron OpenLayers that we'll want to render as background map:</p>
-	<iframe   style="background: white;" src="http://openlayers.org/api/OpenLayers.js" allowfullscreen></iframe>
-	</div>
-	<p> Access the admin page by going to /admin URL and using credentials: admin & ApinaVapina </p>
+	
+
+	{% leaflet_map "mappu" %}
+
+
 	{% block js %} {% endblock %}
+	
     </body>
 	
 </html>

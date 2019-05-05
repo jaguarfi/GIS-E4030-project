@@ -1,5 +1,7 @@
-# 
-mapservice/__pycache__/
-mapapp/__pycache__/
+# ignore .pyc and .pyo files
+*.pyc
+*.pyo
+
+# ignore migrations
 mapapp/migrations/
 logs/debug.log
