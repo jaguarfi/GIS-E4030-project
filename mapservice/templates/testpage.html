@@ -11,16 +11,22 @@
     {% leaflet_css %}
 	
 	<style>
-		{# comment: no clue why this is not working atm? i wanted full page size map, but w/e just proof of concepting for now so... #}
-		.leaflet-container { height: 100%; }
+		.leaflet-container { height: 600px; width: 1500px;}
+		h1 {color : red;}
     </style>
 	
-    </head>
+	<script>
+	window.onload = function test() {
+	window.alert("HEY! check test js script in mapservice/templates/testpage.html");
+	}
+	</script>
 	
+    </head>
 	
     <body>
 	
 	<h1 id="title"> Map service  </h1>
+	
 	<a href="{% url 'mapview' %}">
     back to main page
     </a>
