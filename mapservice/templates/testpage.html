@@ -1,24 +1,36 @@
 <!DOCTYPE HTML>
 {% load static %}
-
+{% load leaflet_tags %}
 
 <html lang="en" >
     <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-
+    <script src="http://openlayers.org/api/OpenLayers.js"></script> 
+	
+	{% leaflet_js %}
+    {% leaflet_css %}
+	
+	<style>
+		{# comment: no clue why this is not working atm? i wanted full page size map, but w/e just proof of concepting for now so... #}
+		.leaflet-container { height: 100%; }
+    </style>
+	
     </head>
+	
+	
     <body>
-	<h1> test page, go crazy trying out stuff! </h1
-    <div id="map">
-	<p>asdafsa </p>
-	</div>
-	{{s}}
-	{{string}}
-	{% block js %} {% endblock %}
-	<br>
+	
+	<h1 id="title"> Map service  </h1>
 	<a href="{% url 'mapview' %}">
-	link back to the main mapview page
-	</a>
+    back to main page
+    </a>
+	
+
+	{% leaflet_map "mappu" %}
+
+
+	{% block js %} {% endblock %}
+	
     </body>
 	
 </html>
