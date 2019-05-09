@@ -201,7 +201,7 @@ LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (60.186829, 24.821367), #coords for rougly tik-talo, one of the two buildings
     'DEFAULT_ZOOM': 16,
     'MIN_ZOOM': 10,
-    'MAX_ZOOM': 18,
+    'MAX_ZOOM': 19,
     'SCALE': 'metric',
 }
 
