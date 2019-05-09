@@ -10,17 +10,27 @@
     {% leaflet_css %}
 	
 	<style>
-		.leaflet-container { height: 600px; width: 1280px;}
+		.leaflet-container { height: 480px; width: 1280px;}
     </style>
     
     <script type='text/javascript'>
-        function build_map (map, options) {
-            if (!map.hasLayer(flayer))
-            {
+        var Lgrp = new L.LayerGroup();
+        var flayer = L.geoJSON();
+        Lgrp.addLayer(flayer);
+
+        function build_map (map) {           
             var geojsonFlr = {{ floor|safe }};
-            var flayer = L.geoJSON(geojsonFlr)
-            flayer.addTo(map);
+            flayer.addData(geojsonFlr);
+            Lgrp.addTo(map);
             }
+        
+        function removefloor(map) {
+            Lgrp.clearLayers();
+            document.getElementById('changefloor').submit();
+        }
+            
+        window.onload = function shownFloors() {
+            document.getElementById('{{selectedfloor}}').selected = true;
             }
     </script>
 	
@@ -36,9 +46,15 @@
 	
 
 	{% leaflet_map "mappu" callback="window.build_map"%}
-
-
-	{% block js %} {% endblock %}
+    <form method="post" id="changefloor">
+        {% csrf_token %}
+        <select type="submit" name="visibfloors" onchange="removefloor(mappu)">
+            <option value="1st" id="1st">Show 1st floors</option>
+            <option value="2nd" id="2nd">Show 2nd floors</option>
+            <option value="3rd" id="3rd">Show 3rd floors</option>
+            <option value="4th" id="4th">Show 4th floors</option>
+        </select>
+    </form>
 	
     </body>
 	

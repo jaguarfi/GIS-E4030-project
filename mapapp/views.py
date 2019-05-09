@@ -5,8 +5,12 @@ from django.core.serializers import serialize
 # Create your views here.
 
 def ui(request):
-    floor = serialize('geojson', FloorLine.objects.all())
-    context = {'floor' : floor, 'test' : 100}
+    selectedfloor = '1st'
+    if request.method == "POST":
+        selectedfloor = request.POST['visibfloors']
+    fpick = FloorLine.objects.filter(level=int(selectedfloor[0]))
+    floor = serialize('geojson', fpick)
+    context = {'floor' : floor, 'selectedfloor' : selectedfloor}
     return render(request, 'mapview.html', context)
 
 

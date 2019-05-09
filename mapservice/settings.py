@@ -198,8 +198,8 @@ LOGGING = {
 #Settings for Django-Leaflet  60.186829   24.821367
 LEAFLET_CONFIG = {
     #'SPATIAL_EXTENT': (), not sure how to fill params - needs 4. long/lats?
-    'DEFAULT_CENTER': (60.186829, 24.821367), #coords for rougly tik-talo, one of the two buildings
-    'DEFAULT_ZOOM': 16,
+    'DEFAULT_CENTER': (60.18695, 24.820), #coords for rougly tik-talo, one of the two buildings
+    'DEFAULT_ZOOM': 18,
     'MIN_ZOOM': 10,
     'MAX_ZOOM': 19,
     'SCALE': 'metric',
