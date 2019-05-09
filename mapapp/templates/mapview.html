@@ -17,21 +17,27 @@
         var Lgrp = new L.LayerGroup();
         var flayer = L.geoJSON();
         Lgrp.addLayer(flayer);
-
-        function build_map (map) {           
-            var geojsonFlr = {{ floor|safe }};
-            flayer.addData(geojsonFlr);
-            Lgrp.addTo(map);
-            }
         
-        function removefloor(map) {
-            Lgrp.clearLayers();
-            document.getElementById('changefloor').submit();
-        }
+        window.addEventListener("map:init", function (event) 
+        {
+        window.map = event.detail.map;
+        window.map.on('click', mapclick);
+        var geojsonFlr = {{ floor|safe }};
+        flayer.addData(geojsonFlr);
+        Lgrp.addTo(window.map);
+        });
+        
             
         window.onload = function shownFloors() {
             document.getElementById('{{selectedfloor}}').selected = true;
             }
+            
+        function mapclick(loc) {
+            var cmarker = L.marker(loc.latlng).bindPopup("<h3>Test marker!</h3><p>Located at " + loc.latlng + ".</p>");
+            cmarker.addTo(window.map);
+            cmarker.openPopup();
+        }
+
     </script>
 	
     </head>
@@ -39,16 +45,16 @@
 	
     <body>
 	
-	<h1 id="title"> Map service  </h1>
+	<h2 id="title"> Map service  </h1>
 	<a href="{% url 'test' %}">
     TEST page! Play around with it
     </a>
 	
 
-	{% leaflet_map "mappu" callback="window.build_map"%}
+	{% leaflet_map "mappu"%}
     <form method="post" id="changefloor">
         {% csrf_token %}
-        <select type="submit" name="visibfloors" onchange="removefloor(mappu)">
+        <select type="submit" name="visibfloors" onchange="this.form.submit()">
             <option value="1st" id="1st">Show 1st floors</option>
             <option value="2nd" id="2nd">Show 2nd floors</option>
             <option value="3rd" id="3rd">Show 3rd floors</option>
