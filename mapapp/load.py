@@ -1,26 +1,39 @@
 import os
 from django.contrib.gis.utils import LayerMapping
-from .models import WorldBorder
+from .models import FloorLine
 
-world_mapping = {
-    'fips' : 'FIPS',
-    'iso2' : 'ISO2',
-    'iso3' : 'ISO3',
-    'un' : 'UN',
-    'name' : 'NAME',
-    'area' : 'AREA',
-    'pop2005' : 'POP2005',
-    'region' : 'REGION',
-    'subregion' : 'SUBREGION',
-    'lon' : 'LON',
-    'lat' : 'LAT',
-    'mpoly' : 'MULTIPOLYGON',
-}
 
-world_shp = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), 'data', 'TM_WORLD_BORDERS-0.3.shp'),
-)
 
-def run(verbose=True):
-    lm = LayerMapping(WorldBorder, world_shp, world_mapping, transform=False)
-    lm.save(strict=True, verbose=verbose)
+app_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
+#floor_mapper = {'geometry' : 'MULTILINESTRING'}
+#floor_mapper = {'linja' : 'LINESTRING'}
+
+def read_lines(file, folder):
+    #reads floorlines of one floor from a .shp. Input params are filename and foldername
+    inputshp = os.path.join(app_path, folder, file) 
+    floor_mapper = {'linja' : 'LINESTRING', 'level' : 'level', 'name' : 'name'}
+    lines = LayerMapping(FloorLine, inputshp, floor_mapper, transform=True)
+    lines.save(strict=True, verbose=True)
+    
+''' 
+def build_floor(floorname, level):
+    #builds floor of floorlines
+    #flr = Floor()
+    num = FloorLine.objects.all().count()
+    linelist = []
+    for i in range(num):
+        line = FloorLine.objects.all()[i:i+1].get()
+        linelist.append(line.linja)
+
+    flr = Floor(level, linelist, floorname)
+    flr.save()
+'''
+    
+'''
+
+from mapapp import load
+load.read_lines('TIK_1.shp', 'EPSG_tik_1')
+
+
+load.build_floor('TIK_1', 1)
+'''

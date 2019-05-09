@@ -5,15 +5,24 @@
 <html lang="en" >
     <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <script src="http://openlayers.org/api/OpenLayers.js"></script> 
-	
+ 
 	{% leaflet_js %}
     {% leaflet_css %}
 	
 	<style>
-		{# comment: no clue why this is not working atm? i wanted full page size map, but w/e just proof of concepting for now so... #}
-		.leaflet-container { height: 100%; }
+		.leaflet-container { height: 600px; width: 1280px;}
     </style>
+    
+    <script type='text/javascript'>
+        function build_map (map, options) {
+            if (!map.hasLayer(flayer))
+            {
+            var geojsonFlr = {{ floor|safe }};
+            var flayer = L.geoJSON(geojsonFlr)
+            flayer.addTo(map);
+            }
+            }
+    </script>
 	
     </head>
 	
@@ -26,7 +35,7 @@
     </a>
 	
 
-	{% leaflet_map "mappu" %}
+	{% leaflet_map "mappu" callback="window.build_map"%}
 
 
 	{% block js %} {% endblock %}

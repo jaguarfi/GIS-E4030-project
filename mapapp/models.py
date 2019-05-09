@@ -1,6 +1,9 @@
 from django.contrib.gis.db import models
 
+
+
 class WorldBorder(models.Model):
+    #The geodjango tutorial model for world borders, not actually needed for the project
     # Regular Django fields corresponding to the attributes in the
     # world borders shapefile.
     name = models.CharField(max_length=50)
@@ -23,17 +26,23 @@ class WorldBorder(models.Model):
         return self.name
 
 
-# worldborders_mapping = {
-#     'fips' : 'FIPS',
-#     'iso2' : 'ISO2',
-#     'iso3' : 'ISO3',
-#     'un' : 'UN',
-#     'name' : 'NAME',
-#     'area' : 'AREA',
-#     'pop2005' : 'POP2005',
-#     'region' : 'REGION',
-#     'subregion' : 'SUBREGION',
-#     'lon' : 'LON',
-#     'lat' : 'LAT',
-#     'geom' : 'MULTIPOLYGON',
-# }
+#borked
+#class Floor(models.Model):
+    #level: 1+ and needed for vertical topology. We'll define background map/outside as level zero and the converted CAD floors are 1+
+    #accept nulls and blank, as they are loaded by a script that creates the objects first with geometry and sequentially adds the others
+    #level = models.IntegerField()
+    #floorgeom = models.MultiLineStringField()
+    #name = models.CharField(max_length=30)
+    
+class FloorLine(models.Model):
+    '''
+    temporary class to help create floors
+    '''
+    level = models.IntegerField()
+    linja = models.LineStringField()
+    name = models.CharField(max_length=30)
+
+
+
+
+
