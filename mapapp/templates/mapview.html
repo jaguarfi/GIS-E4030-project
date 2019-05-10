@@ -5,12 +5,13 @@
 <html lang="en" >
     <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
- 
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
 	{% leaflet_js %}
     {% leaflet_css %}
 	
 	<style>
-		.leaflet-container { height: 480px; width: 1280px;}
+		.leaflet-container { height: 540px; width: 1366px;}
     </style>
     
     <script type='text/javascript'>
@@ -20,17 +21,17 @@
         
         window.addEventListener("map:init", function (event) 
         {
-        window.map = event.detail.map;
-        window.map.on('click', mapclick);
-        var geojsonFlr = {{ floor|safe }};
-        flayer.addData(geojsonFlr);
-        Lgrp.addTo(window.map);
+            window.map = event.detail.map;
+            window.map.on('click', mapclick);
+            var geojsonFlr = {{ floor|safe }};
+            flayer.addData(geojsonFlr);
+            Lgrp.addTo(window.map);
         });
         
             
         window.onload = function shownFloors() {
             document.getElementById('{{selectedfloor}}').selected = true;
-            }
+        }
             
         function mapclick(loc) {
             var cmarker = L.marker(loc.latlng).bindPopup("<h3>Test marker!</h3><p>Located at " + loc.latlng + ".</p>");
