@@ -14,7 +14,15 @@ def read_lines(file, folder):
     floor_mapper = {'linja' : 'LINESTRING', 'level' : 'level', 'name' : 'name'}
     lines = LayerMapping(FloorLine, inputshp, floor_mapper, transform=True)
     lines.save(strict=True, verbose=True)
-    
+
+
+def rename_building(old_name, new_name):
+    building = FloorLine.objects.filter(building_name=old_name)
+    for line in building:
+        line.building_name = new_name
+        line.save()
+
+
 ''' 
 def build_floor(floorname, level):
     #builds floor of floorlines
