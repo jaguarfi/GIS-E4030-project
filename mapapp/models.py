@@ -40,7 +40,7 @@ class FloorLine(models.Model):
     '''
     level = models.IntegerField()
     linja = models.LineStringField()
-    name = models.CharField(max_length=30)
+    building_name = models.CharField(max_length=30)
 
 
 
