@@ -38,6 +38,7 @@ class FloorLine(models.Model):
     '''
     temporary class to help create floors
     '''
+    layer = models.CharField(max_length=30)
     level = models.IntegerField()
     linja = models.LineStringField()
     building_name = models.CharField(max_length=30)

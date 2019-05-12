@@ -11,9 +11,9 @@ app_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
 def read_lines(file, folder):
     #reads floorlines of one floor from a .shp. Input params are filename and foldername
     inputshp = os.path.join(app_path, folder, file) 
-    floor_mapper = {'linja' : 'LINESTRING', 'level' : 'level', 'building_name' : 'name'}
+    floor_mapper = {'linja' : 'LINESTRING', 'level' : 'level', 'building_name' : 'name', 'layer' : 'Layer'}
     lines = LayerMapping(FloorLine, inputshp, floor_mapper, transform=True)
-    lines.save(strict=True, verbose=True)
+    lines.save(strict=False, verbose=True)
 
 
 def rename_building(old_name, new_name):
