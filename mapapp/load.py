@@ -5,8 +5,19 @@ from .models import FloorLine
 
 
 app_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
-#floor_mapper = {'geometry' : 'MULTILINESTRING'}
-#floor_mapper = {'linja' : 'LINESTRING'}
+
+
+'''
+Provides a function to read data from a .shp file to the PostGIS database.
+How to use for the given data in bash:
+>py manage.py shell
+>from mapapp import load
+>load.read_lines('buildings_3851.shp', 'EPSG_building')
+These commands should work by copy&paste in the terminal. if more data is added later, simply replace file&folder name variables as needed.
+
+The function rename_buildings taking in arguments of old and new building name and will replace the name of all FloorLine objects that belond to a building
+with the old name. So for renaming a building.
+'''
 
 def read_lines(file, folder):
     #reads floorlines of one floor from a .shp. Input params are filename and foldername
@@ -23,25 +34,3 @@ def rename_building(old_name, new_name):
         line.save()
 
 
-''' 
-def build_floor(floorname, level):
-    #builds floor of floorlines
-    #flr = Floor()
-    num = FloorLine.objects.all().count()
-    linelist = []
-    for i in range(num):
-        line = FloorLine.objects.all()[i:i+1].get()
-        linelist.append(line.linja)
-
-    flr = Floor(level, linelist, floorname)
-    flr.save()
-'''
-    
-'''
-
-from mapapp import load
-load.read_lines('TIK_1.shp', 'EPSG_tik_1')
-
-
-load.build_floor('TIK_1', 1)
-'''
