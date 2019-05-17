@@ -125,7 +125,7 @@ STATIC_URL = '/static/'
 import os
 
 #check username to determine system and fix parameters conditionally:
-if os.environ['USERNAME'] == 'juhan':
+if os.environ['USERNAME'] == 'juhani':
     DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -170,7 +170,7 @@ elif os.environ['USERNAME'] == 'Bijay Karki':
     }
     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
 else:
-    print("If you are seeing this and something isn't working, try going to the settings.py and define custom parameters to be used in your environment, see lines 125-170 for examples")
+    raise ValueError("If you are seeing this go to settings.py and define custom parameters to be used in your environment, at least for your PostGIS database, see lines 125-170 for examples")
 
 
 
