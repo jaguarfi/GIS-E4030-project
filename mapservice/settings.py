@@ -170,7 +170,6 @@ elif os.environ['USERNAME'] == 'Bijay Karki':
     }
     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
 else:
-    pass
     raise ValueError("If you are seeing this go to settings.py and define custom parameters to be used in your environment, at least for your PostGIS database, see lines 125-170 for examples")
 
 
