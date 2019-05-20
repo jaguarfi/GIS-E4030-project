@@ -34,10 +34,47 @@
         }
             
         function mapclick(loc) {
-            var cmarker = L.marker(loc.latlng).bindPopup("<h3>Test marker!</h3><p>Located at " + loc.latlng + ".</p>");
-            cmarker.addTo(window.map);
-            cmarker.openPopup();
+            if (!window.startm)
+            {
+                window.startm = L.marker(loc.latlng);
+                window.startm.addTo(window.map);
+            }
+            else if (!window.endm)
+            {
+                window.endm = L.marker(loc.latlng);
+                window.endm.addTo(window.map);
+                linedistance();
+
+            }
+            else
+            {
+                window.endm.remove();
+                window.endm = window.startm;
+                window.startm = L.marker(loc.latlng);
+                window.startm.addTo(window.map);
+                linedistance();
+
+            }
         }
+        
+        function linedistance() {
+            {# a very basic dummy solution set to work at latitude of 60.187 #}
+            if (window.pline)
+            {
+                window.pline.remove();
+            }
+            var diff_lat =  (window.endm._latlng.lat - window.startm._latlng.lat) * 111415.41;
+            var diff_lng =  (window.endm._latlng.lng - window.startm._latlng.lng) * 55484.77;
+            var dist = Math.sqrt( (Math.pow(diff_lat, 2)) + Math.pow(diff_lng, 2) ) ;
+            
+            var coords = [[window.startm._latlng.lat, window.startm._latlng.lng], [window.endm._latlng.lat, window.endm._latlng.lng]];
+            window.pline = L.polyline(coords, {color: 'red'});
+            window.pline.bindPopup("<h3>Distance between points: " + dist + " meters!</h3>");
+            window.pline.addTo(map);
+            window.pline.openPopup();
+            console.log(dist + " meters");
+        }
+
 
     </script>
 	
