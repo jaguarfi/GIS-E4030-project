@@ -54,6 +54,12 @@
 
         
         var osmLayer;
+
+        function buildPopup(properties){
+            var text = "<strong>Building: </strong><span>"+ properties.building_name.toString() + "</span><br><strong>Floor: </strong>" + "<span>"+ properties.level.toString() + "</span>"
+            
+            return text;
+        }
         window.addEventListener("map:init", function (event) {
             
             map = event.detail.map;
@@ -66,38 +72,45 @@
 
             var tik_1 = new L.GeoJSON.AJAX("{% url 'TIK' 1 %}", {
                 onEachFeature: function(feature, layer){
-                    layer.bindPopup(feature.properties.building_name.toString());
+                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+                    layer.bindPopup(text);
                 }
             });
             var tik_2 = new L.GeoJSON.AJAX("{% url 'TIK' 2 %}", {
                 onEachFeature: function(feature, layer){
-                    layer.bindPopup(feature.properties.building_name.toString());
+                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+                    layer.bindPopup(text);
                 }
             });
             var tik_3 = new L.GeoJSON.AJAX("{% url 'TIK' 3 %}", {
                 onEachFeature: function(feature, layer){
-                    layer.bindPopup(feature.properties.building_name.toString());
+                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+                    layer.bindPopup(text);
                 }
             });
 
             var tuas_1 = new L.GeoJSON.AJAX("{% url 'TUAS' 1 %}", {
                 onEachFeature: function(feature, layer){
-                    layer.bindPopup(feature.properties.building_name.toString());
+                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+                    layer.bindPopup(text);
                 }
             });
             var tuas_2 = new L.GeoJSON.AJAX("{% url 'TUAS' 2 %}", {
                 onEachFeature: function(feature, layer){
-                    layer.bindPopup(feature.properties.building_name.toString());
+                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+                    layer.bindPopup(text);
                 }
             });
             var tuas_3 = new L.GeoJSON.AJAX("{% url 'TUAS' 3 %}", {
                 onEachFeature: function(feature, layer){
-                    layer.bindPopup(feature.properties.building_name.toString());
+                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+                    layer.bindPopup(text);
                 }
             });
             var tuas_4 = new L.GeoJSON.AJAX("{% url 'TUAS' 4 %}", {
                 onEachFeature: function(feature, layer){
-                    layer.bindPopup(feature.properties.building_name.toString());
+                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+                    layer.bindPopup(text);
                 }
             });
 
