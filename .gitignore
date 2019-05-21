@@ -4,4 +4,10 @@
 
 # ignore migrations
 **/migrations
+
+# ignore logs
 logs/debug.log
+
+#
+static/dist
+
