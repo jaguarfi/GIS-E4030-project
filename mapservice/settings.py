@@ -140,7 +140,7 @@ elif os.environ['USERNAME'] == 'Jhosea':
     DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'GIS_DB',
+        'NAME': 'GIS_DB_DEV',
         'USER': 'postgres',
         'PASSWORD': 'admin#2019#aalto',
     }
