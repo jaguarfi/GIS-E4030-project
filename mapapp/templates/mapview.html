@@ -14,33 +14,58 @@
 		.leaflet-container { height: 600px; width: 100%;}
     </style>
     
-    <link rel="stylesheet" href="{% static 'dist/leaflet.groupedlayercontrol.min.css' %}">
-    <script type="text/javascript" src="{% static 'dist/leaflet.groupedlayercontrol.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}">
+    <script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'leaflet-ajax/leaflet.ajax.min.js' %}"></script>
 
     <script type='text/javascript'>
         var Lgrp = new L.LayerGroup();
         var flayer = L.geoJSON();
-        Lgrp.addLayer(flayer);
+
+        var tik = new L.LayerGroup();
+        var tuas = new L.LayerGroup();
+
+
+        function tik_layers(map,options){
         
-        window.addEventListener("map:init", function (event) 
-        {
-            window.map = event.detail.map;
-            window.map.on('click', mapclick);
-            var geojsonFlr = {{ floor|safe }};
-            flayer.addData(geojsonFlr);
-            Lgrp.addTo(window.map);
+            var tik_1 = new L.GeoJSON.AJAX("{% url 'TIK' 1 %}",{
+
+            });
+            var tik_2 = new L.GeoJSON.AJAX("{% url 'TIK' 2 %}",{
+
+            });
+            var tik_3 = new L.GeoJSON.AJAX("{% url 'TIK' 2 %}",{
+
+            });
+            // tik.addLayer(tik_2);
+
+            var tuas_1 = new L.GeoJSON.AJAX("{% url 'TUAS' 1 %}",{
+
+            });
+            var tuas_2 = new L.GeoJSON.AJAX("{% url 'TUAS' 2 %}",{
+
+            });
+            var tuas_3 = new L.GeoJSON.AJAX("{% url 'TUAS' 3 %}",{
+
+            });
+            var tuas_4 = new L.GeoJSON.AJAX("{% url 'TUAS' 4 %}",{
+
+            });
+            
+            tik_1.addTo(map)
+            tuas_1.addTo(map)
 
             var groupedOverlays = {
-            "TUAS": {
-                "First Floor": Lgrp,
-                "Second Floor": Lgrp,
-                "Third Floor": Lgrp,
-            },
             "TIK": {
-                "First Floor": Lgrp,
-                "Second Floor": Lgrp,
-                "Third Floor": Lgrp,
-                "Fourth Floor": Lgrp
+                "First Floor": tik_1,
+                "Second Floor": tik_2,
+                "Third Floor": tik_3,
+            },
+            "TUAS": {
+                "First Floor": tuas_1,
+                "Second Floor": tuas_2,
+                "Third Floor": tuas_3,
+                "Fourth Floor": tuas_4
               }
             };
 
@@ -51,13 +76,37 @@
             groupCheckboxes: false
             };
                    
-            L.control.groupedLayers(null,groupedOverlays,options).addTo(window.map);
+            L.control.groupedLayers(null,groupedOverlays,options).addTo(map);
+        };
 
-            map.on('overlayadd', onOverlayAdd);
+        var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {id: 'MapID', attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'});//,
+        streets   = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {id: 'MapID', attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'});
 
-            function onOverlayAdd(e){
-                window.alert("www")
-            }
+        // var map = L.map('map', {
+        //     center: [39.73, -104.99],
+        //     zoom: 10,
+        //     layers: [streets]
+        // });
+
+        window.addEventListener("map:init", function (event) 
+        {
+            map = event.detail.map;
+
+            map.on('click', mapclick);
+            // var geojsonFlr = {{ floor|safe }};
+            // flayer.addData(geojsonFlr);
+            // Lgrp.addTo(map);
+            streets.addTo(map);
+            // tik.addTo(map);
+            // tuas.addTo(map);
+
+            
+
+            // map.on('overlayadd', onOverlayAdd);
+
+            // function onOverlayAdd(e){
+            //     window.alert("www")
+            // }
 
         }, );
         
@@ -68,11 +117,13 @@
         //     "Streets": streets
         // };
             
-        window.onload = function shownFloors() {
-            document.getElementById('{{selectedfloor}}').selected = true;
-        }
+        // window.onload = function shownFloors() {
+        //     document.getElementById('{{selectedfloor}}').selected = true;
+        // }
             
-        function mapclick(loc) {
+        function mapclick (loc) {
+            if (loc.originalEvent.shiftKey){
+            
             if (!window.startm)
             {
                 window.startm = L.marker(loc.latlng);
@@ -95,6 +146,7 @@
 
             }
         }
+        }
         
         function linedistance() {
             {# a very basic dummy solution set to work at latitude of 60.187 #}
@@ -116,7 +168,9 @@
 
 
     </script>
-	
+    <script type="text/javascript">
+    
+    </script>
     </head>
 	
 	
@@ -124,8 +178,8 @@
 	
 	<h1 id="title" style="color:purple;font-style:italic;text-align: center;line-height: 0.2;"> Map service  </h1>
 
-	{% leaflet_map "mappu"%}
-    <form method="post" id="changefloor">
+	{% leaflet_map "mappu" callback="window.tik_layers" %}
+    <!-- <form method="post" id="changefloor">
         {% csrf_token %}
         <select type="submit" name="visibfloors" onchange="this.form.submit()">
             <option value="1st" id="1st">Show 1st floors</option>
@@ -133,7 +187,7 @@
             <option value="3rd" id="3rd">Show 3rd floors</option>
             <option value="4th" id="4th">Show 4th floors</option>
         </select>
-    </form>
+    </form> -->
 	
     </body>
 	
