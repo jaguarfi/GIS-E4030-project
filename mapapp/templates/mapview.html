@@ -10,6 +10,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
     {% leaflet_js %}
@@ -17,7 +18,7 @@
 
     <style>
         .leaflet-container {
-            height: 550px;
+            height: 540px;
             width: 100%;
         }
     </style>
@@ -172,7 +173,7 @@
             window.pline = L.polyline(coords, {
                 color: 'red'
             });
-            window.pline.bindPopup("<h3>Distance between points: " + dist + " meters!</h3>");
+            window.pline.bindPopup("<h5>Distance between points: " + dist + " meters!</h5>");
             window.pline.addTo(map);
             window.pline.openPopup();
             console.log(dist + " meters");
@@ -183,21 +184,33 @@
 <body>
     <nav class="navbar navbar-dark bg-dark shadow-sm">
         <a class="navbar-brand" href="#">
-            <img src="{% static 'icons/Aalto.png' %}" width="65" height="60" alt=""><strong> Map service</strong>
+            <img src="{% static 'icons/Aalto.png' %}" width="65" height="60" alt=""><strong> The GISApp Project</strong>
         </a>
 
     </nav>
     {% leaflet_map "mappu" callback="window.tik_layers" %}
-
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="https://version.aalto.fi/gitlab/heikkij16/gis-dev-proj" target="_blank">Source Code</a>
-            </p>
-            <p>GIS-E4030 - GIS Development L</p>
-            <p>Documentation <a href="https://version.aalto.fi/gitlab/heikkij16/gis-dev-proj/wikis/home" target="_blank">Visit the Wiki</a> or access our google drive<a href="https://drive.google.com/open?id=14zajvUcBZ82NwmdH_OfBrTHQUeHl9g24" target="_blank"> Google drive</a>.</p>
+    <footer class="page-footer text-muted font-small bg-light teal pt-4">
+        <div class="container-fluid text-center text-md-left">      
+          <div class="row">
+            <div class="col-md-6 mt-md-0 mt-3  text-center">
+              <h6 class="text-uppercase font-weight-bold">GIS-E4030 - GIS Development L</h6>
+              <p class="pull-right"> The documentation could be founded in the <a href="https://version.aalto.fi/gitlab/heikkij16/gis-dev-proj/wikis/home" target="_blank">Wiki Page</a> or in our<a href="https://drive.google.com/open?id=14zajvUcBZ82NwmdH_OfBrTHQUeHl9g24" target="_blank"> Google drive</a>.</p>
+      
+            </div>      
+            <hr class="clearfix w-100 d-md-none pb-3">
+            <div class="col-md-6 mb-md-0 mb-3 text-center">
+            <h6 class="text-uppercase font-weight-bold ">People involved</h6>
+              <a href="mailto:juhani.heikkila@aalto.fi"> Juhani Heikkilä,</a>
+            <a href="mailto:tekla@aalto.fi"> Tekla,</a>
+            <a href="mailto:jhosimar.aguaciafisco@aalto.fi"> Jhosimar Aguacia,</a>
+            <a href="mailto:bijay.karkir@aalto.fi"> Bijay Karki.</a>     
+            </div>
+      
+          </div>
         </div>
-    </footer>
+        </div>
+      
+      </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->    
