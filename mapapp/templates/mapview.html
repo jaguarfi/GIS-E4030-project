@@ -6,6 +6,10 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
     {% leaflet_js %}
@@ -13,7 +17,7 @@
 
     <style>
         .leaflet-container {
-            height: 600px;
+            height: 550px;
             width: 100%;
         }
     </style>
@@ -177,9 +181,29 @@
 </head>
 
 <body>
-    <h1 id="title" style="color:purple;font-style:italic;text-align: center;line-height: 0.2;"> Map service </h1>
+    <nav class="navbar navbar-dark bg-dark shadow-sm">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'icons/Aalto.png' %}" width="65" height="60" alt=""><strong> Map service</strong>
+        </a>
+
+    </nav>
     {% leaflet_map "mappu" callback="window.tik_layers" %}
+
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="https://version.aalto.fi/gitlab/heikkij16/gis-dev-proj" target="_blank">Source Code</a>
+            </p>
+            <p>GIS-E4030 - GIS Development L</p>
+            <p>Documentation <a href="https://version.aalto.fi/gitlab/heikkij16/gis-dev-proj/wikis/home" target="_blank">Visit the Wiki</a> or access our google drive<a href="https://drive.google.com/open?id=14zajvUcBZ82NwmdH_OfBrTHQUeHl9g24" target="_blank"> Google drive</a>.</p>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 </html>
