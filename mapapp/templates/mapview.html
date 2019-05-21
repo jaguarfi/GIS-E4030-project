@@ -2,20 +2,25 @@
 {% load static %}
 {% load leaflet_tags %}
 
-<html lang="en" >
-    <head>
+<html lang="en">
+
+<head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
-	{% leaflet_js %}
+    {% leaflet_js %}
     {% leaflet_css %}
-	
-	<style>
-		.leaflet-container { height: 600px; width: 100%;}
+
+    <style>
+        .leaflet-container {
+            height: 600px;
+            width: 100%;
+        }
     </style>
-    
+
     <link rel="stylesheet" href="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}">
-    <script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}">
+    </script>
     <script type="text/javascript" src="{% static 'leaflet-ajax/leaflet.ajax.min.js' %}"></script>
 
     <script type='text/javascript'>
@@ -26,169 +31,155 @@
         var tuas = new L.LayerGroup();
 
 
-        function tik_layers(map,options){
+        function tik_layers(map, options) {
+
+
+        };
+
+        var imagery = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                id: 'MapID',
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            }),
+        streets = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+                id: 'MapID',
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+            });
+
         
-            var tik_1 = new L.GeoJSON.AJAX("{% url 'TIK' 1 %}",{
-
-            });
-            var tik_2 = new L.GeoJSON.AJAX("{% url 'TIK' 2 %}",{
-
-            });
-            var tik_3 = new L.GeoJSON.AJAX("{% url 'TIK' 2 %}",{
-
-            });
-            // tik.addLayer(tik_2);
-
-            var tuas_1 = new L.GeoJSON.AJAX("{% url 'TUAS' 1 %}",{
-
-            });
-            var tuas_2 = new L.GeoJSON.AJAX("{% url 'TUAS' 2 %}",{
-
-            });
-            var tuas_3 = new L.GeoJSON.AJAX("{% url 'TUAS' 3 %}",{
-
-            });
-            var tuas_4 = new L.GeoJSON.AJAX("{% url 'TUAS' 4 %}",{
-
-            });
+        var osmLayer;
+        window.addEventListener("map:init", function (event) {
             
+            map = event.detail.map;
+
+            map.eachLayer(function (layer) {
+                osmLayer = layer;
+            });
+
+            map.on('contextmenu', mapclick);
+
+            var tik_1 = new L.GeoJSON.AJAX("{% url 'TIK' 1 %}", {
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.building_name.toString());
+                }
+            });
+            var tik_2 = new L.GeoJSON.AJAX("{% url 'TIK' 2 %}", {
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.building_name.toString());
+                }
+            });
+            var tik_3 = new L.GeoJSON.AJAX("{% url 'TIK' 3 %}", {
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.building_name.toString());
+                }
+            });
+
+            var tuas_1 = new L.GeoJSON.AJAX("{% url 'TUAS' 1 %}", {
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.building_name.toString());
+                }
+            });
+            var tuas_2 = new L.GeoJSON.AJAX("{% url 'TUAS' 2 %}", {
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.building_name.toString());
+                }
+            });
+            var tuas_3 = new L.GeoJSON.AJAX("{% url 'TUAS' 3 %}", {
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.building_name.toString());
+                }
+            });
+            var tuas_4 = new L.GeoJSON.AJAX("{% url 'TUAS' 4 %}", {
+                onEachFeature: function(feature, layer){
+                    layer.bindPopup(feature.properties.building_name.toString());
+                }
+            });
+
             tik_1.addTo(map)
             tuas_1.addTo(map)
-
+            
+            var baseMaps = {
+                "Imagery": imagery,
+                "Streets": osmLayer,
+            };
             var groupedOverlays = {
-            "TIK": {
-                "First Floor": tik_1,
-                "Second Floor": tik_2,
-                "Third Floor": tik_3,
-            },
-            "TUAS": {
-                "First Floor": tuas_1,
-                "Second Floor": tuas_2,
-                "Third Floor": tuas_3,
-                "Fourth Floor": tuas_4
-              }
+                "TIK": {
+                    "First Floor": tik_1,
+                    "Second Floor": tik_2,
+                    "Third Floor": tik_3,
+                },
+                "TUAS": {
+                    "First Floor": tuas_1,
+                    "Second Floor": tuas_2,
+                    "Third Floor": tuas_3,
+                    "Fourth Floor": tuas_4,
+                }
             };
 
             var options = {
-            // Make the "Landmarks" group exclusive (use radio inputs)
-            exclusiveGroups: ["TUAS","TIK"],
-            // Show a checkbox next to non-exclusive group labels for toggling all
-            groupCheckboxes: false
+                // Make the "Landmarks" group exclusive (use radio inputs)
+                exclusiveGroups: ["TUAS", "TIK"],
+                // Show a checkbox next to non-exclusive group labels for toggling all
+                groupCheckboxes: false
             };
-                   
-            L.control.groupedLayers(null,groupedOverlays,options).addTo(map);
-        };
 
-        var imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {id: 'MapID', attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'});//,
-        streets   = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {id: 'MapID', attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'});
-
-        // var map = L.map('map', {
-        //     center: [39.73, -104.99],
-        //     zoom: 10,
-        //     layers: [streets]
-        // });
-
-        window.addEventListener("map:init", function (event) 
-        {
-            map = event.detail.map;
-
-            map.on('click', mapclick);
-            // var geojsonFlr = {{ floor|safe }};
-            // flayer.addData(geojsonFlr);
-            // Lgrp.addTo(map);
-            streets.addTo(map);
-            // tik.addTo(map);
-            // tuas.addTo(map);
-
-            
-
-            // map.on('overlayadd', onOverlayAdd);
-
-            // function onOverlayAdd(e){
-            //     window.alert("www")
-            // }
+            L.control.groupedLayers(baseMaps, groupedOverlays, options).addTo(map);
 
         }, );
-        
-        
 
-        // var baseMaps = {
-        //     "<span style='color: gray'>Grayscale</span>": grayscale,
-        //     "Streets": streets
-        // };
-            
-        // window.onload = function shownFloors() {
-        //     document.getElementById('{{selectedfloor}}').selected = true;
-        // }
-            
-        function mapclick (loc) {
-            if (loc.originalEvent.shiftKey){
-            
-            if (!window.startm)
-            {
-                window.startm = L.marker(loc.latlng);
-                window.startm.addTo(window.map);
-            }
-            else if (!window.endm)
-            {
-                window.endm = L.marker(loc.latlng);
-                window.endm.addTo(window.map);
-                linedistance();
+        function mapclick(loc) {
+            if (!loc.originalEvent.shiftKey) {
 
-            }
-            else
-            {
-                window.endm.remove();
-                window.endm = window.startm;
-                window.startm = L.marker(loc.latlng);
-                window.startm.addTo(window.map);
-                linedistance();
+                if (!window.startm) {
+                    window.startm = L.marker(loc.latlng);
+                    window.startm.addTo(window.map);
+                } else if (!window.endm) {
+                    window.endm = L.marker(loc.latlng);
+                    window.endm.addTo(window.map);
+                    linedistance();
 
+                } else {
+                    window.endm.remove();
+                    window.endm = window.startm;
+                    window.startm = L.marker(loc.latlng);
+                    window.startm.addTo(window.map);
+                    linedistance();
+
+                }
             }
         }
-        }
-        
+
         function linedistance() {
-            {# a very basic dummy solution set to work at latitude of 60.187 #}
-            if (window.pline)
             {
+                // #a very basic dummy solution set to work at latitude of 60.187#
+            }
+            if (window.pline) {
                 window.pline.remove();
             }
-            var diff_lat =  (window.endm._latlng.lat - window.startm._latlng.lat) * 111415.41;
-            var diff_lng =  (window.endm._latlng.lng - window.startm._latlng.lng) * 55484.77;
-            var dist = Math.sqrt( (Math.pow(diff_lat, 2)) + Math.pow(diff_lng, 2) ) ;
-            
-            var coords = [[window.startm._latlng.lat, window.startm._latlng.lng], [window.endm._latlng.lat, window.endm._latlng.lng]];
-            window.pline = L.polyline(coords, {color: 'red'});
+            var diff_lat = (window.endm._latlng.lat - window.startm._latlng.lat) * 111415.41;
+            var diff_lng = (window.endm._latlng.lng - window.startm._latlng.lng) * 55484.77;
+            var dist = Math.sqrt((Math.pow(diff_lat, 2)) + Math.pow(diff_lng, 2));
+
+            var coords = [
+                [window.startm._latlng.lat, window.startm._latlng.lng],
+                [window.endm._latlng.lat, window.endm._latlng.lng]
+            ];
+            window.pline = L.polyline(coords, {
+                color: 'red'
+            });
             window.pline.bindPopup("<h3>Distance between points: " + dist + " meters!</h3>");
             window.pline.addTo(map);
             window.pline.openPopup();
             console.log(dist + " meters");
         }
-
-
     </script>
-    <script type="text/javascript">
-    
-    </script>
-    </head>
-	
-	
-    <body>
-	
-	<h1 id="title" style="color:purple;font-style:italic;text-align: center;line-height: 0.2;"> Map service  </h1>
+</head>
 
-	{% leaflet_map "mappu" callback="window.tik_layers" %}
-    <!-- <form method="post" id="changefloor">
-        {% csrf_token %}
-        <select type="submit" name="visibfloors" onchange="this.form.submit()">
-            <option value="1st" id="1st">Show 1st floors</option>
-            <option value="2nd" id="2nd">Show 2nd floors</option>
-            <option value="3rd" id="3rd">Show 3rd floors</option>
-            <option value="4th" id="4th">Show 4th floors</option>
-        </select>
-    </form> -->
-	
-    </body>
-	
+<body>
+    <h1 id="title" style="color:purple;font-style:italic;text-align: center;line-height: 0.2;"> Map service </h1>
+    {% leaflet_map "mappu" callback="window.tik_layers" %}
+</body>
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 </html>

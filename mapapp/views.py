@@ -6,13 +6,7 @@ from django.http  import HttpResponse
 # Create your views here.
 
 def ui(request):
-    selectedfloor = '1st'
-    if request.method == "POST":
-        selectedfloor = request.POST['visibfloors']
-    fpick = FloorLine.objects.filter(level=int(selectedfloor[0]),building_name='TUAS_TALO')
-    floor = serialize('geojson', fpick)
-    context = {'floor' : floor, 'selectedfloor' : selectedfloor}
-    return render(request, 'mapview.html', context)
+    return render(request, 'mapview.html')
 
 def TIK(request, floor):
     selectedfloor = floor
