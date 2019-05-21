@@ -31,11 +31,7 @@
     <script type='text/javascript'>
         var Lgrp = new L.LayerGroup();
         var flayer = L.geoJSON();
-
-        var tik = new L.LayerGroup();
-        var tuas = new L.LayerGroup();
-
-
+        
         function tik_layers(map, options) {
 
 
@@ -114,8 +110,8 @@
                 }
             });
 
-            tik_1.addTo(map)
-            tuas_1.addTo(map)
+            tik_1.addTo(map);
+            tuas_1.addTo(map);
             
             var baseMaps = {
                 "Imagery": imagery,
@@ -139,7 +135,7 @@
                 // Make the "Landmarks" group exclusive (use radio inputs)
                 exclusiveGroups: ["TUAS", "TIK"],
                 // Show a checkbox next to non-exclusive group labels for toggling all
-                groupCheckboxes: false
+                groupCheckboxes: true
             };
 
             L.control.groupedLayers(baseMaps, groupedOverlays, options).addTo(map);
