@@ -3,5 +3,5 @@
 *.pyo
 
 # ignore migrations
-mapapp/migrations/
+**/migrations
 logs/debug.log

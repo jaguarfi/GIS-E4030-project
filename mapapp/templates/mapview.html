@@ -14,6 +14,9 @@
 		.leaflet-container { height: 540px; width: 1366px;}
     </style>
     
+    <link rel="stylesheet" href="{% static 'dist/leaflet.groupedlayercontrol.min.css' %}">
+    <script type="text/javascript" src="{% static 'dist/leaflet.groupedlayercontrol.min.js' %}"></script>
+
     <script type='text/javascript'>
         var Lgrp = new L.LayerGroup();
         var flayer = L.geoJSON();
@@ -26,8 +29,53 @@
             var geojsonFlr = {{ floor|safe }};
             flayer.addData(geojsonFlr);
             Lgrp.addTo(window.map);
+
+
+          
+            var Overlayers = {
+            "First Floor": Lgrp,
+            "Second Floor" : Lgrp,
+            "Third Floor" : Lgrp,
+            "Fourth Floor" : Lgrp,
+            };
+            
+            var groupedOverlays = {
+            "TUAS": {
+                "First Floor": Lgrp,
+                "Second Floor": Lgrp,
+                "Third Floor": Lgrp,
+            },
+            "TIK": {
+                "First Floor": Lgrp,
+                "Second Floor": Lgrp,
+                "Third Floor": Lgrp,
+                "Fourth Floor": Lgrp
+              }
+            };
+
+            var options = {
+            // Make the "Landmarks" group exclusive (use radio inputs)
+            exclusiveGroups: ["TUAS","TIK"],
+            // Show a checkbox next to non-exclusive group labels for toggling all
+            groupCheckboxes: false
+            };
+                   
+            L.control.groupedLayers(null,groupedOverlays,options).addTo(window.map);
+
+            map.on('overlayadd', onOverlayAdd);
+
+        function onOverlayAdd(e){
+            window.alert("www")
+        }
+
         }, );
         
+        
+
+        // var baseMaps = {
+        //     "<span style='color: gray'>Grayscale</span>": grayscale,
+        //     "Streets": streets
+        // };
             
         window.onload = function shownFloors() {
             document.getElementById('{{selectedfloor}}').selected = true;
