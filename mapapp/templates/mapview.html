@@ -32,11 +32,7 @@
         var Lgrp = new L.LayerGroup();
         var flayer = L.geoJSON();
         
-        function tik_layers(map, options) {
-
-
-        };
-
+        
         var imagery = L.tileLayer(
             'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 id: 'MapID',
@@ -138,9 +134,66 @@
                 groupCheckboxes: true
             };
 
-            L.control.groupedLayers(baseMaps, groupedOverlays, options).addTo(map);
+            var layerControl = L.control.groupedLayers(baseMaps, groupedOverlays, options);
+            var baseLayerControl = L.control.groupedLayers(baseMaps); 
+            map.addControl(layerControl);
+            var flag = -1;
+            map.on('zoomend', function() {
+                
+            if (map.getZoom() < 16){
+                if (map.hasLayer(tik_1) ) {  
+                    tik_1.remove();
+                    layerControl.remove(); 
+                    map.addControl(baseLayerControl); 
+                    flag = 1;
+                } 
+                else if (map.hasLayer(tik_2)) {
+                    tik_2.remove();
+                    layerControl.remove(); 
+                    map.addControl(baseLayerControl); 
+                    flag = 2;
+                }
+                else if (map.hasLayer(tik_3)) {
+                    tik_3.remove();
+                    layerControl.remove();
+                    map.addControl(baseLayerControl); 
+                    flag = 3;
+                }                                
+                else{
+                    
+                }
+                         
+            }
+            if (map.getZoom() >= 16){                
+                if (flag == 1){
+                    tik_1.addTo(map);
+                    baseLayerControl.remove();
+                    map.addControl(layerControl);
+                    flag = 0
+                }
+                else if (flag == 2){
+                    tik_2.addTo(map);
+                    baseLayerControl.remove();
+                    map.addControl(layerControl);
+                    flag = 0
+                } 
+                else if (flag == 3){
+                    tik_3.addTo(map);
+                    baseLayerControl.remove();
+                    map.addControl(layerControl);
+                    flag = 0
+                }
+                else{
+                    
+                }
+                
+            }
+        });
 
         }, );
+
+        
+
 
         function mapclick(loc) {
             if (!loc.originalEvent.shiftKey) {
