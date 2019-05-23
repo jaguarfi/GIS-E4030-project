@@ -68,18 +68,18 @@
                     layer.bindPopup(text);
                 }
             });
-            var tik_2 = new L.GeoJSON.AJAX("{% url 'TIK' 2 %}", {
-                onEachFeature: function(feature, layer){
-                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
-                    layer.bindPopup(text);
-                }
-            });
-            var tik_3 = new L.GeoJSON.AJAX("{% url 'TIK' 3 %}", {
-                onEachFeature: function(feature, layer){
-                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
-                    layer.bindPopup(text);
-                }
-            });
+            var tik_2 = new L.GeoJSON.AJAX();//"{% url 'TIK' 2 %}", {
+            //     onEachFeature: function(feature, layer){
+            //         var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+            //         layer.bindPopup(text);
+            //     }
+            // });
+            var tik_3 = new L.GeoJSON.AJAX();//"{% url 'TIK' 3 %}", {
+            //     onEachFeature: function(feature, layer){
+            //         var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+            //         layer.bindPopup(text);
+            //     }
+            // });
 
             var tuas_1 = new L.GeoJSON.AJAX("{% url 'TUAS' 1 %}", {
                 onEachFeature: function(feature, layer){
@@ -87,24 +87,24 @@
                     layer.bindPopup(text);
                 }
             });
-            var tuas_2 = new L.GeoJSON.AJAX("{% url 'TUAS' 2 %}", {
-                onEachFeature: function(feature, layer){
-                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
-                    layer.bindPopup(text);
-                }
-            });
-            var tuas_3 = new L.GeoJSON.AJAX("{% url 'TUAS' 3 %}", {
-                onEachFeature: function(feature, layer){
-                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
-                    layer.bindPopup(text);
-                }
-            });
-            var tuas_4 = new L.GeoJSON.AJAX("{% url 'TUAS' 4 %}", {
-                onEachFeature: function(feature, layer){
-                    var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
-                    layer.bindPopup(text);
-                }
-            });
+            var tuas_2 = new L.GeoJSON.AJAX();//"{% url 'TUAS' 2 %}", {
+            //     onEachFeature: function(feature, layer){
+            //         var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+            //         layer.bindPopup(text);
+            //     }
+            // });
+            var tuas_3 = new L.GeoJSON.AJAX();//"{% url 'TUAS' 3 %}", {
+            //     onEachFeature: function(feature, layer){
+            //         var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+            //         layer.bindPopup(text);
+            //     }
+            // });
+            var tuas_4 = new L.GeoJSON.AJAX();//"{% url 'TUAS' 4 %}", {
+            //     onEachFeature: function(feature, layer){
+            //         var text = buildPopup({building_name: feature.properties.building_name, level:feature.properties.level})
+            //         layer.bindPopup(text);
+            //     }
+            // });
 
             tik_1.addTo(map);
             tuas_1.addTo(map);
@@ -138,6 +138,66 @@
             var baseLayerControl = L.control.groupedLayers(baseMaps); 
             map.addControl(layerControl);
             var flag = -1;
+            map.on('overlayadd', onOverlayAdd);
+
+            function onOverlayAdd(layer, name){
+                console.log(layer)
+                
+                var buildingName = layer.group.name;
+                
+                // var buildingName = $(this).attr("TUAS");
+                var id = $(this).attr(1);
+                var url = new String();
+                console.log(layer.layer.urls);
+                console.log(layer.layer.urls.length)
+                switch(layer.name){
+                    case "First Floor":
+                    if(layer.layer.urls === undefined || layer.layer.urls.length  == 0){ 
+                        console.log("mierdaaa")  
+                        if (layer.group.name == "TUAS"){
+                            layer.layer.addUrl("{% url 'TUAS' 1 %}");
+                        }
+                        else{
+                            layer.layer.addUrl("{% url 'TIK' 1 %}");
+                        }
+                    }
+                        break;
+                    case "Second Floor":
+                        if(layer.layer.urls === undefined || layer.layer.urls.length  == 0){                       
+                            if (layer.group.name == "TUAS"){
+                                layer.layer.refresh("{% url 'TUAS' 2 %}");
+                            }
+                            else{
+                                layer.layer.refresh("{% url 'TIK' 2 %}");
+                            }
+                        }
+                        break;
+                    case "Third Floor":
+                        if(layer.layer.urls === undefined || layer.layer.urls.length  == 0){                       
+                            if (layer.group.name == "TUAS"){
+                                layer.layer.refresh("{% url 'TUAS' 3 %}");
+                            }
+                            else{
+                                layer.layer.refresh("{% url 'TIK' 3 %}");
+                            }
+                        }
+                        break;
+                    case "Fourth Floor":
+                        if(layer.layer.urls === undefined || layer.layer.urls.length  == 0){                       
+                            if (layer.group.name == "TUAS"){
+                                layer.layer.refresh("{% url 'TUAS' 4 %}");
+                            }
+                            else{
+                                layer.layer.refresh("{% url 'TIK' 4 %}");
+                            }
+                        }
+                        break;
+                    default:
+                    console.log("fff");
+                }
+                    
+                layer.layer.addUrl(url);
+            }
             map.on('zoomend', function() {
                 
             if (map.getZoom() < 16){
@@ -263,7 +323,7 @@
             <div class="col-md-6 mb-md-0 mb-3 text-center">
             <h6 class="text-uppercase font-weight-bold ">People involved</h6>
               <a href="mailto:juhani.heikkila@aalto.fi"> Juhani Heikkilä,</a>
-            <a href="mailto:tekla@aalto.fi"> Tekla,</a>
+            <a href="mailto:tekla.Larinkoski@aalto.fi"> Tekla Larinkoski,</a>
             <a href="mailto:jhosimar.aguaciafisco@aalto.fi"> Jhosimar Aguacia,</a>
             <a href="mailto:bijay.karkir@aalto.fi"> Bijay Karki.</a>     
             </div>
