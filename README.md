@@ -48,6 +48,6 @@
     - git push - pushes made changes to master branch repository
     - git checkout <filepath> - permanently disregards changes in this file compared to master branch
 
-
+* Note: you will need to connect your project folder to a Git reposity first, either this one or create a new one.
 
 
