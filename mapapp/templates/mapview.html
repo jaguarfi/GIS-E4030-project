@@ -7,6 +7,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -22,10 +23,11 @@
             width: 100%;
         }
     </style>
-
+    <link rel="stylesheet" href="{% static 'leaflet-routing/leaflet-routing-machine.css' %}"/>
     <link rel="stylesheet" href="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}">
     <script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}">
     </script>
+    <script src="{% static 'leaflet-routing/leaflet-routing-machine.js' %}"></script>
     <script type="text/javascript" src="{% static 'leaflet-ajax/leaflet.ajax.min.js' %}"></script>
 
     <script type='text/javascript'>
@@ -148,6 +150,7 @@
             
             return text;
         }
+        
         window.addEventListener("map:init", function (event) {
             
             map = event.detail.map;
@@ -185,10 +188,20 @@
                 // Show a checkbox next to non-exclusive group labels for toggling all
                 groupCheckboxes: true
             };
+            
 
             var layerControl = L.control.groupedLayers(baseMaps, groupedOverlays, options);
             var baseLayerControl = L.control.groupedLayers(baseMaps); 
+            var routingControl = L.Routing.control({
+                waypoints: [
+                    L.latLng(60.187, 24.817),
+                    L.latLng(60.187, 24.821)
+                ],
+                routeWhileDragging: true,
+            });
+            routingControl.setPosition('bottomleft');
             map.addControl(layerControl);
+            map.addControl(routingControl);
             var flag = -1;
             map.on('zoomend', function() {
                 
@@ -241,6 +254,7 @@
                 
             }
         });
+
 
         }, );
 
