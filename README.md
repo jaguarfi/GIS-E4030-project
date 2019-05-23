@@ -8,11 +8,11 @@
 
 * Install all dependencies as described in https://docs.djangoproject.com/en/dev/ref/contrib/gis/install/.
 
-* Also install django-leaflet with pip install. (In general you can install most python libraries by git console with the command: 'pip install <library name>')
+* Also install django-leaflet with pip install. (In general you can install most python libraries by terminal with the command: 'pip install <library name>')
 
 * After you've installed PostGIS make sure to define the database settings you chose in mapservice/settings.py.
 
-* All of the instructions below are for using a Git Bash terminal on a Windows 10 installation. They should work for other terminals and other windows verions, but if you are using a different operating system something may work differently.
+* All of the instructions below are for using a Git Bash terminal on a Windows 10 installation. They should work for other terminals and other windows versions, but if you are using a different operating system something may work differently.
 
 * All relevant commands start with 'python' or 'git'. The commands starting 'python' can be shortened to start with prefix 'py' instead, which is used here.
 
@@ -22,7 +22,7 @@
 * You will need to use the following commands for database management to create a table for the floor lines:
     - py manage.py makemigrations        
     - py manage.py migrate
-* The first one plans changes to the database and the second commits them. Needs to be run when new tables are added or existing ones edited. 
+    - The first one plans changes to the database and the second commits them. Needs to be run when new tables are added or existing ones edited. 
 
 * To import the data for the floors of the buildings you will need to use a script from load.py. This is done by opening a python shell inside the project and then running the script with correct parameters (of folder and file name). The inputs below should work for the datafiles that were used for TIK and TUAS buildings.
     - py manage.py shell
