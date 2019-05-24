@@ -31,6 +31,7 @@
 
 * You can run the server from terminal by 
     - py manage.py runserver
+    - Please note! Running the server locally can be slow at fetching data from DB - just becaues it might take a few minutes for the floor lines to appear on map doesn't mean it isn't working (especially if you are using a HDD instead of SSD for the database storage).
 
 * Access the site locally by localhost:8000 in your browser.
 * If you intend to do any developer work or simply edit something to test it out, a private browsing mode (ex. Google Chrome's Incognito) is recommended, as browsers often cache static files instead of refetching them when refreshing the page and as such newly made changes may not appear.
