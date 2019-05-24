@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-%rrm!d5i7z82co0w-#788dz=3m4db6&9@mo2=c9xwpdvy%j!^'
-
+# SECRET_KEY = '-%rrm!d5i7z82co0w-#788dz=3m4db6&9@mo2=c9xwpdvy%j!^'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '-%rrm!d5i7z82co0w-#788dz=3m4db6&9@mo2=c9xwpdvy%j!^')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,56 +126,59 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 #Fix for each system separately?
 import os
 
 #check username to determine system and fix parameters conditionally:
-if os.environ['USERNAME'] == 'juhan':
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'GIS_DB1',
-        'USER': 'postgres',
-        'PASSWORD': 'ApinaVapina',
-        'HOST': 'localhost',
-    }
-    }
-    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
+# if os.environ['USERNAME'] == 'juhan':
+#     DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'GIS_DB1',
+#         'USER': 'postgres',
+#         'PASSWORD': 'ApinaVapina',
+#         'HOST': 'localhost',
+#     }
+#     }
+#     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
         
-elif os.environ['USERNAME'] == 'Jhosea':
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'GIS_DB_DEV',
-        'USER': 'postgres',
-        'PASSWORD': 'admin#2019#aalto',
-    }
-    }
-elif os.environ['USERNAME'] == 'Tekla':
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postgis_25_sample',
-        'USER': 'postgres',
-        'PASSWORD': 'ApinaVapina',
-        'HOST': 'localhost',
-    }
-    }
-    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W64\\bin\\gdal204.dll'
-elif os.environ['USERNAME'] == 'Bijay Karki':
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'GIS_DB1',
-        'USER': 'postgres',
-        'PASSWORD': 'karki',
-        'HOST': 'localhost',
-        'PORT' : '5433',
-    }
-    }
-    GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
-else:
-    raise ValueError("If you are seeing this go to settings.py and define custom parameters to be used in your environment, at least for your PostGIS database, see lines 125-170 for examples")
+# elif os.environ['USERNAME'] == 'Jhosea':
+DATABASES = {
+'default': {
+    'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    'NAME': 'GIS_DB_DEV',
+    'USER': 'postgres',
+    'PASSWORD': 'admin#2019#aalto',
+}
+}
+# elif os.environ['USERNAME'] == 'Tekla':
+#     DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'postgis_25_sample',
+#         'USER': 'postgres',
+#         'PASSWORD': 'ApinaVapina',
+#         'HOST': 'localhost',
+#     }
+#     }
+#     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W64\\bin\\gdal204.dll'
+# elif os.environ['USERNAME'] == 'Bijay Karki':
+#     DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'GIS_DB1',
+#         'USER': 'postgres',
+#         'PASSWORD': 'karki',
+#         'HOST': 'localhost',
+#         'PORT' : '5433',
+#     }
+#     }
+#     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
+# else:
+#     raise ValueError("If you are seeing this go to settings.py and define custom parameters to be used in your environment, at least for your PostGIS database, see lines 125-170 for examples")
 
 
 
@@ -208,4 +213,3 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 19,
     'SCALE': 'metric',
 }
-

@@ -1,0 +1,1 @@
+web: gunicorn mapservice.wsgi --log-file -
