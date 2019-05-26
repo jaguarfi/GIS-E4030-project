@@ -158,6 +158,7 @@ DATABASES = {
     'PASSWORD': 'admin#2019#aalto',
 }
 }
+GDAL_LIBRARY_PATH = 'C:\\Program Files (x86)\\GDAL\\gdal202.dll'
 # elif os.environ['USERNAME'] == 'Tekla':
 #     DATABASES = {
 #     'default': {
