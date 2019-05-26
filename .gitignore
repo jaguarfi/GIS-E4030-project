@@ -3,7 +3,7 @@
 *.pyo
 
 # ignore migrations
-**/migrations
+# **/migrations
 
 #
 static/**
