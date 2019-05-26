@@ -4,6 +4,7 @@
 
 # ignore migrations
 # **/migrations
+#
 
 #
 static/**
