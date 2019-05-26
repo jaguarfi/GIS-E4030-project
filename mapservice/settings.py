@@ -159,8 +159,10 @@ DATABASES = {
     'PASSWORD': 'admin#2019#aalto',
 }
 }
+
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
 GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 # GDAL_LIBRARY_PATH = 'C:\\Program Files (x86)\\GDAL\\gdal202.dll'
