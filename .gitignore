@@ -14,3 +14,8 @@ static/**
 # Database
 *.sqlite3
 
+#virtual environment
+env
+
+# vscode
+.vscode/
