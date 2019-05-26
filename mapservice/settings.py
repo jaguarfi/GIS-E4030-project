@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
 from os import environ
 
 
@@ -218,3 +219,4 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 19,
     'SCALE': 'metric',
 }
+django_heroku.settings(locals())
