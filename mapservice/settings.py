@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import django_heroku
 from os import environ
+import dj_database_url
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -149,6 +150,7 @@ import os
 #     GDAL_LIBRARY_PATH = 'C:\\OSGeo4W\\bin\\gdal204.dll'
         
 # elif os.environ['USERNAME'] == 'Jhosea':
+
 DATABASES = {
 'default': {
     'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -157,6 +159,8 @@ DATABASES = {
     'PASSWORD': 'admin#2019#aalto',
 }
 }
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
 GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 # GDAL_LIBRARY_PATH = 'C:\\Program Files (x86)\\GDAL\\gdal202.dll'
