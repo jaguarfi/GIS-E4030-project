@@ -1,1 +1,1 @@
-web: gunicorn mapservice.wsgi 
+web: gunicorn mapservice.wsgi --log-file -
