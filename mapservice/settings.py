@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '-%rrm!d5i7z82co0w-#788dz=3m4db
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'thawing-bastion-80394.herokuapp.com']
 
 
 # Application definition
