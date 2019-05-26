@@ -164,7 +164,6 @@ GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # GDAL_LIBRARY_PATH = 'C:\\Program Files (x86)\\GDAL\\gdal202.dll'
 # elif os.environ['USERNAME'] == 'Tekla':
@@ -227,3 +226,4 @@ LEAFLET_CONFIG = {
     'SCALE': 'metric',
 }
 django_heroku.settings(locals()) 
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
