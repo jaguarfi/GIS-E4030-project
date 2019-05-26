@@ -219,4 +219,4 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 19,
     'SCALE': 'metric',
 }
-django_heroku.settings(locals())
+django_heroku.settings(locals()) 
